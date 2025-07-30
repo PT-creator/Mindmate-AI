@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MindMate AI Psychologist</title>
+</head>
+<body>
+    <h2>Talk to MindMate 🧠</h2>
+    <div id="chatBox" style="white-space: pre-wrap; margin-bottom: 10px;"></div>
+    <input type="text" id="userInput" placeholder="What's on your mind?" />
+    <button onclick="send()">Send</button>
+
+    <script>
+        function send() {
+            let msg = document.getElementById("userInput").value;
+            let chatBox = document.getElementById("chatBox");
+            chatBox.innerHTML += "🧍‍♀️ You: " + msg + "\n";
+
+            fetch("/get", {
+                method: "POST",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: "msg=" + encodeURIComponent(msg)
+            })
+            .then(res => res.text())
+            .then(reply => {
+                chatBox.innerHTML += "🤖 MindMate: " + reply + "\n\n";
+                document.getElementById("userInput").value = "";
+            });
+        }
+    </script>
+</body>
+</html>
