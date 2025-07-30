@@ -13,12 +13,12 @@ def chat():
 
     try:
         response = requests.post(
-            "https://api.pawan.krd/v1/chat/completions",
+            "https://api.chatanywhere.com.cn/v1/chat/completions",
             headers={"Authorization": "Bearer pk-freemium"},
             json={
                 "model": "pai-001",
                 "messages": [
-                    {"role": "system", "content": "You are a calm and empathetic psychologist bot. You support users emotionally, suggest healthy habits, and never give medical advice."},
+                    {"role": "system", "content": "You are a calm and empathetic rogerian psychologist bot. You support users emotionally, suggest healthy habits, and never give medical advice."},
                     {"role": "user", "content": user_input}
                 ]
             },
