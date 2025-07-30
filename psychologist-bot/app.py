@@ -12,27 +12,34 @@ def chat():
     user_input = request.form.get('msg', '')
 
     try:
+        # API call
         response = requests.post(
             "https://api.chatanywhere.com.cn/v1/chat/completions",
-            headers={"Authorization": "Bearer pk-freemium"},
+            headers={"Authorization": "Bearer sk-antipaid"},
             json={
-                "model": "pai-001",
+                "model": "gpt-3.5-turbo",
                 "messages": [
-                    {"role": "system", "content": "You are a calm and empathetic rogerian psychologist bot. You support users emotionally, suggest healthy habits, and never give medical advice."},
+                    {"role": "system", "content": "You are a kind and calm AI psychologist. Your job is to listen, support, and gently guide the user through their thoughts. You do not diagnose or prescribe."},
                     {"role": "user", "content": user_input}
                 ]
             },
             timeout=10
         )
+
+        # Log the entire response
+        print("API Response:", response.text)
+
+        # Convert JSON
         data = response.json()
 
-        if 'choices' in data and data['choices']:
-            reply = data['choices'][0]['message']['content']
+        # Validate and extract content
+        if data and "choices" in data and len(data["choices"]) > 0:
+            reply = data["choices"][0]["message"]["content"]
         else:
-            reply = "Sorry, I couldn't understand that. Please try again."
+            reply = "I received an unexpected response. Please try again."
 
     except Exception as e:
-        reply = f"Oops! Error: {str(e)}"
+        reply = f"An error occurred: {str(e)}"
 
     return reply
 
